@@ -8,23 +8,31 @@ import org.jsoup.nodes.Document;
 import strings.ErrorMessages;
 import strings.HTML;
 
-public class WebAgent {
+public abstract class WebAgent {
 
-   Document webpage;
+   protected Document webpage;
 
    public WebAgent() {
       initConnection();
    }
 
-   private void initConnection() {
+   public void initConnection(String url) {
       try {
-         webpage = Jsoup.connect(HTML.url).userAgent("Mozilla")
-               .timeout(60 * 1000).get();
+         webpage = Jsoup.connect(url).userAgent("Mozilla")
+               .timeout(30 * 1000).get();
       } catch (IOException e) {
          System.out.println(ErrorMessages.connectionFailed);
          System.exit(0);
       }
    }
    
-   
+   private void initConnection() {
+      try {
+         webpage = Jsoup.connect(HTML.url).userAgent("Mozilla")
+               .timeout(30 * 1000).get();
+      } catch (IOException e) {
+         System.out.println(ErrorMessages.connectionFailed);
+         System.exit(0);
+      }
+   }
 }
