@@ -1,3 +1,5 @@
+package containers;
+
 import java.util.ArrayList;
 
 public class Wallpapers {
@@ -6,7 +8,7 @@ public class Wallpapers {
    public Wallpapers(int amountOfWallpapers) {
       list = new ArrayList<String>(amountOfWallpapers * 10);
    }
-   
+
    public void add(String url) {
       list.add(url);
    }

@@ -1,10 +1,10 @@
-package webAgent;
+package agents;
 
-import webAgent.WebAgent;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import strings.HTML;
+import containers.Wallpapers;
 
 public class Agent extends WebAgent {
 
@@ -13,6 +13,7 @@ public class Agent extends WebAgent {
 
    public Agent() {
       numberOfPages = getNumberOfPages();
+      wallpapers = new Wallpapers(numberOfPages);
       crawlPagesAndStoreResults();
    }
 

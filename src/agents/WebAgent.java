@@ -1,4 +1,4 @@
-package webAgent;
+package agents;
 
 import java.io.IOException;
 

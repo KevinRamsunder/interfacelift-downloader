@@ -1,4 +1,5 @@
-import webAgent.Agent;
+import agents.Agent;
+
 
 public class Main {
 
