@@ -22,9 +22,14 @@ public class Agent extends WebAgent {
       crawlPagesAndStoreResults();
    }
 
+   public Wallpapers getWallpaperList() {
+      return wallpapers;
+   }
+
    /**
     * get the list of selector elements from the webpage. The second to last
     * element from the list holds the number of pages
+    * 
     * @return number of pages
     */
    private int getNumberOfPages() {
@@ -40,6 +45,8 @@ public class Agent extends WebAgent {
    private void crawlPagesAndStoreResults() {
       int seed = 1;
       int pages = numberOfPages;
+      System.out.println("Crawling " + pages
+            + " pages...\n(This may take some time)");
 
       while (pages > 0) {
          // Get the picture links on the page, then add them to Wallpapers
@@ -55,7 +62,9 @@ public class Agent extends WebAgent {
 
    /**
     * Get the image urls from the page, add them to Wallpapers
-    * @param dlLinks Contains wallpaper download urls
+    * 
+    * @param dlLinks
+    *           Contains wallpaper download urls
     */
    private void addURLsFromPage(Elements dlLinks) {
       for (Element e : dlLinks) {
@@ -66,7 +75,9 @@ public class Agent extends WebAgent {
 
    /**
     * append the original link with the modifier for the next page
-    * @param seed the page number
+    * 
+    * @param seed
+    *           the page number
     * @return the modified url
     */
    private String getNextURL(int seed) {

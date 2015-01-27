@@ -17,4 +17,18 @@ public class Wallpapers {
    public void add(String url) {
       list.add(url);
    }
+
+   public int size() {
+      return list.size();
+   }
+
+   public ArrayList<String> getListOfWallpapers() {
+      return list;
+   }
+
+   public void printURLs() {
+      for (int i = 0; i < list.size(); i++) {
+         System.out.println(i + ": " + list.get(i));
+      }
+   }
 }
