@@ -8,8 +8,9 @@ import containers.Wallpapers;
 
 public class Agent extends WebAgent {
 
-   private int numberOfPages;
-   private Wallpapers wallpapers;
+   private int numberOfPages; // number of pages to search
+   private int numberOfWallpapers; // number of wallpapers found
+   private Wallpapers wallpapers; // container for wallpapers
 
    /**
     * Get the number of pages that contain wallpapers, then instantiate
@@ -18,74 +19,75 @@ public class Agent extends WebAgent {
     */
    public Agent() {
       numberOfPages = getNumberOfPages();
-      wallpapers = new Wallpapers(numberOfPages);
+      numberOfWallpapers = 0;
+      wallpapers = new Wallpapers(numberOfPages); 
       crawlPagesAndStoreResults();
    }
 
-   public Wallpapers getWallpaperList() {
-      return wallpapers;
-   }
-
    /**
-    * get the list of selector elements from the webpage. The second to last
-    * element from the list holds the number of pages
-    * 
+    * Get the list of selector elements from the webpage. The second to last
+    * element from the list holds the number of pages.
     * @return number of pages
     */
    private int getNumberOfPages() {
-      Elements listOfPages = webpage.select("a.selector");
+      // html tag that has list of pages
+      Elements listOfPages = webpage.select("a.selector"); 
+      
+      // the second to last number in the list contains the total number of pages
       int size = listOfPages.size();
       size = Integer.parseInt(listOfPages.get(size - 2).text());
       return size;
    }
 
-   /**
-    * crawl each page for the wallpaper urls.
-    */
+   /** Crawl each page for the wallpaper urls. */
    private void crawlPagesAndStoreResults() {
-      int seed = 1;
+      int seed = 1; // needed for modifying URL
+      
       int pages = numberOfPages;
-      System.out.println("Crawling " + pages
-            + " pages...\n(This may take some time)");
+      System.out.println("Crawling " + pages + " pages...\n(This may take some time)");
 
+      // go through each page that contains a wallpaper
       while (pages > 0) {
          // Get the picture links on the page, then add them to Wallpapers
          Elements dlLinks = webpage.select("div[id^=download] > a");
+         
+         // add each wallpaper on the page to the container
          addURLsFromPage(dlLinks);
 
          // get the next page ready
          super.initConnection(getNextURL(seed));
-         seed++;
-         pages--;
+         
+         seed++; // needed for modifying next url
+         pages--; // page is finished, decrement
       }
    }
 
    /**
-    * Get the image urls from the page, add them to Wallpapers
-    * 
-    * @param dlLinks
-    *           Contains wallpaper download urls
+    * Get the image urls from the page, add them to Wallpaper
+    * @param dlLinks Contains wallpaper download urls
     */
    private void addURLsFromPage(Elements dlLinks) {
+      // add each url to container
       for (Element e : dlLinks) {
-         // add the url to Wallpapers
          wallpapers.add(e.absUrl("href"));
+         numberOfWallpapers++;
       }
    }
-
+   
    /**
     * append the original link with the modifier for the next page
-    * 
-    * @param seed
-    *           the page number
+    * @param seed the page number
     * @return the modified url
     */
    private String getNextURL(int seed) {
-      StringBuilder linkAppend = new StringBuilder();
-      linkAppend.append(HTML.url);
-      linkAppend.append("index");
-      linkAppend.append(seed);
-      linkAppend.append(".html");
-      return linkAppend.toString();
+      return HTML.url + "index" + seed + ".html";
+   }
+   
+   public Wallpapers getWallpaperList() {
+      return wallpapers;
+   }
+   
+   public int getNumberOfWallpapers() {
+      return numberOfWallpapers;
    }
 }
