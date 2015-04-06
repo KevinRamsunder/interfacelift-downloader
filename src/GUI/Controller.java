@@ -1,7 +1,6 @@
 package GUI;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class Controller {
 
@@ -13,23 +12,38 @@ public class Controller {
       this.display = display;
    }
 
+   /** Start preparation for operations */
+   public void start() {
+      this.startConnection(); // start connection to website
+      this.startScraping(); // start gathering wallpapers
+      this.enableDownloadButton(); // enable download user operation
+   }
+
+   /** Change GUI view to downloading phase */
+   public void startDownloadView() {
+      String message = "Downloading " + model.getWallpaperCount()
+            + " images. to current directory.\nYou can cancel this process at anytime.";
+      
+      display.setButtonStatus(false);
+      display.showMessage(message);
+      display.setText("Downloading to current directory...");
+   }
+
    /** Start connection to website */
-   public void startConnection() {
+   private void startConnection() {
       // disable download button
       display.setButtonStatus(false);
       display.setText("Starting connection to InterfaceLift.com...");
-
-      // initialize web agent
-      model.startAgent();
+      model.startAgent(); // initialize web agent
    }
 
    /** Start collecting all wallpapers */
-   public void startScraping() {
+   private void startScraping() {
       // use a separate thread to gather wallpapers in background
       startScrapingInBackground();
 
       // tell user
-      String displayText = "Connection established\n" + "Searching "
+      String displayText = "Connection established!\n" + "Searching "
             + model.getPageCount() + " pages...\n"
             + "(This may take some time)\n";
       display.showMessage(displayText);
@@ -41,7 +55,15 @@ public class Controller {
       display.showMessage("Total wallpapers found: "
             + model.getWallpaperCount());
       display.setText("Complete. Start download below.");
+   }
+
+   /** Enable download button and its functions */
+   private void enableDownloadButton() {
+      // enable button
       display.setButtonStatus(true);
+
+      // add action listener
+      display.addDownloadListener(this, model.getWallpapers());
    }
 
    /** Use a separate thread to collect and store wallpapers */

@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import containers.Wallpapers;
+
 public class Display {
 
    private JFrame frame;
@@ -14,9 +16,10 @@ public class Display {
    private JLabel text;
 
    public Display() {
-      initFrame(); // set frame
-      initButton(); // set button
-      initText(); // set text
+      // set GUI elements
+      initFrame(); 
+      initButton();
+      initText(); 
    }
 
    /** Show message dialog to user */
@@ -32,6 +35,13 @@ public class Display {
    /** Enable or disable button */
    public void setButtonStatus(boolean state) {
       submitButton.setEnabled(state);
+   }
+   
+   /** Add action listener to download button, requires wallpapers */
+   public void addDownloadListener(Controller controller, Wallpapers w) {
+      // construct listener and add to button
+      DownloadAction dlAction = new DownloadAction(controller, w);
+      submitButton.addActionListener(dlAction);
    }
 
    /** Initialize frame properties */
