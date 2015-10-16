@@ -1,11 +1,11 @@
-# InterfaceLift Downloader
+# Interface Lift Downloader
 
 ### About
-[InterfaceLift.com](https://interfacelift.com/) is a website that provides free desktop wallpapers for download.
+[InterfaceLift.com](https://interfacelift.com/wallpaper/downloads/date/any/) is a website that provides free desktop wallpapers for download.
 
 This program allows you to quicky download hundreds of high quality wallpapers for your own personal use.
 
-View the main program, responsible for the GUI,  [here.](https://github.com/KevinRamsunder/interfacelift-downloader/blob/master/src/GUI/InterfaceLiftDownloader.java) A jar configuration of this project is coming soon.
+View the main program, responsible for the GUI,  [here.](https://github.com/KevinRamsunder/interfacelift-downloader/blob/master/src/GUI/InterfaceLiftDownloader.java)
 
 ###Implementation
 This program utilizes simple web-scraping technology to create an archive of various images. Then, you are given the option to download the images to your own local directory in a quick and simple process. Features to select which images you want to download, as well as viewing a preview of the images, are coming soon.
